@@ -28,5 +28,17 @@ conda install -c conda-forge r-seurat
 conda install -c bioconda anndata2ri r-signac bioconductor-singlecellexperiment
 ```
 
-### Useful Q&As
+## Workflow
+
+### Download data from Synapse and Google Drive (coming soon)
+
+### Run the steps in the `format.ipynb` notebook to create inputs to preprocess
+
+### Run the steps in the `preprocess.ipynb` notebook to create filtered loom files for SCENIC run
+
+### Run the steps in the `run.ipynb` notebook to run different configurations of SCENIC pipleine
+
+### Run the steps in the `eval.ipynb` notebook to run different analyses on the SCENIC output
+
+## Useful Q&As
 https://github.com/aertslab/SCENICprotocol/issues/52
