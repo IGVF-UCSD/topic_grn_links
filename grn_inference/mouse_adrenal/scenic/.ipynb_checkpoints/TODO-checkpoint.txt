@@ -1,3 +1,0 @@
-1. in preprocess.py, generate needed files to run SCENIC (loom or maybe its been updated to handle anndata)
-2. in scenic.py, generate the results for a generic scenic run
-3. in eval.ipynb, evaluate those results for a set of criteria
