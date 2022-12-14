@@ -1,4 +1,0 @@
-1. single format script or notebook to generate all the files necessary for all the tools? is that too mcuh
-2. in preprocess.ipynb, get the data ready for SCENIC specifically
-3. in run.ipynb, illustrate how to set up script running
-3. in eval.ipynb, evaluate those results for a set of criteria

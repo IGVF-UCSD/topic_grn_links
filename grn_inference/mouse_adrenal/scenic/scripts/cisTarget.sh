@@ -3,7 +3,7 @@
 #SBATCH -o %x.out
 #SBATCH -e %x.err
 ##############################################
-# USAGE: sbatch --job-name=ctx_test --cpus-per-task=16 --mem-per-cpu=4G cisTarget.sh $adj_in $ranking $annotation $loom_in $out_file
+# USAGE: sbatch --job-name=cisTarget_subset --cpus-per-task=16 --mem-per-cpu=8G --time=14-00:00:00 cisTarget.sh $adj_in $ranking $annotation $loom_in $out_file
 # Date 02/17/2022
 ##############################################
 
@@ -11,7 +11,7 @@ date
 echo -e "Job ID: $SLURM_JOB_ID\n"
 
 # Configuring env (choose either singularity or conda)
-source activate /cellar/users/aklie/opt/miniconda3/envs/single_cell_py
+source activate /cellar/users/aklie/opt/miniconda3/envs/scverse-py38
 
 # Configure input arguments
 adj_in=$1
@@ -24,7 +24,7 @@ echo -e "Loading GRN from: $adj_in"
 echo -e "Using regulatory feature database: $ranking"
 echo -e "Using regulatory feature to TF annotation from: $annotation"
 echo -e "Using expression in: $loom_in"
-echo -e "Outputting regulons to: $out_file"
+echo -e "Outputting regulons to: $out_file\n"
 
 # Run the pruning and enrichment algorithm from the CLI
 CMD="pyscenic ctx $adj_in \

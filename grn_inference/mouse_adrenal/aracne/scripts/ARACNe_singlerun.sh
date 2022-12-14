@@ -3,36 +3,40 @@
 #SBATCH -o %x.out
 #SBATCH -e %x.err
 ##############################################
-# USAGE: sbatch --job-name=grn_test --cpus-per-task=32 --mem-per-cpu=4G --time=02-00:00:00 $loom_in $tf_list $out_file $method
-# USAGE:  --export=IN=$DATA_DIR,OUT=$OUT_DIR,EXPR_MAT=$E_MAT,TF_LIST=$TFS,P_VAL=$P,NUM_BOOTSTRAPS=NUM aracne.sbatch
+# USAGE: sbatch --job-name=ARACNe_singlerun_test --cpus-per-task=16 --mem-per-cpu=8G --time=14-00:00:00 ARACNe_singlerun.sh $tsv_in $tf_list $out_dir $pval
 # Date 02/17/2022
 ##############################################
+
+date
+echo -e "Job ID: $SLURM_JOB_ID\n"
+
 # Configuring env
 ARACNE_PATH=/cellar/users/aklie/opt/ARACNe-AP/dist/aracne.jar
 
-# Useful debugging outputs
-echo -e "Outputting files to $OUT"
-echo -e "Expression data should be in $IN/$EXPR_MAT"
-echo -e "TFs should be in $TF_LIST"
-echo -e "Bootstrapping over $NUM_BOOTSTRAPS runs"
-echo -e "Consolidating with Bonferonni p-value = $P_VAL"
+# Configure input arguments
+tsv_in=$1
+tf_list=$2
+out_dir=$3
+pval=$4
 
-# Set-up timer
-start=$SECONDS
-cd $IN
+echo -e "Loading tsv file: $tsv_in"
+echo -e "Using tfs in: $tf_list"
+echo -e "Outputting to directory: $out_dir\n"
+echo -e "Using a pvalue of $pval"
 
-# Calculate threshold
-java -jar $ARACNE_PATH -e $EXPR_MAT -o $OUT --tfs $TF_LIST --pvalue $P_VAL --seed -1 --threads $SLURM_CPUS_PER_TASK --calculateThreshold
-    
-# Bootstrap on samples
-for i in $(seq $NUM_BOOTSTRAPS)
-do
-java -jar $ARACNE_PATH -e $EXPR_MAT -o $OUT --tfs $TF_LIST --pvalue $P_VAL --threads $SLURM_CPUS_PER_TASK --seed $i
-done
+# Calculate threshold from the CLI
+CMD="java -jar $ARACNE_PATH -e $tsv_in -o $out_dir --tfs $tf_list --pvalue $pval --seed -1 --threads $SLURM_CPUS_PER_TASK --calculateThreshold"
+echo -e "Running:\n $CMD"
+$CMD
+
+# Single bootstrap
+CMD="java -jar $ARACNE_PATH -e $tsv_in -o $out_dir --tfs $tf_list --pvalue $pval  --seed 1 --threads $SLURM_CPUS_PER_TASK"
+echo -e "Running:\n $CMD"
+$CMD
    
 # Consolidate bootstraps
-java -jar $ARACNE_PATH -o $OUT --consolidate
+CMD="java -jar $ARACNE_PATH -o $out_dir --consolidate"
+echo -e "Running:\n $CMD"
+$CMD
 
-# Ouptut time of command
-duration=$(( SECONDS - start ))
-echo -e "\nTime elapsed for this job of array in seconds: $duration"
+date

@@ -3,29 +3,24 @@
 #SBATCH -o %x.out
 #SBATCH -e %x.err
 ##############################################
-# USAGE: sbatch --job-name=grn_test --cpus-per-task=32 --mem-per-cpu=4G --time=02-00:00:00 $loom_in $tf_list $out_file $method
+# USAGE: sbatch --job-name=calculateThreshold_test --cpus-per-task=32 --mem-per-cpu=4G --time=14-00:00:00 calculateThreshold.sh $tsv_in $tf_list $out_dir $pval
 # Date 02/17/2022
 ##############################################
 
 date
 echo -e "Job ID: $SLURM_JOB_ID\n"
 
-# Configuring env (choose either singularity or conda)
-source activate /cellar/users/aklie/opt/miniconda3/envs/scverse-py38
+# Configuring env
+ARACNE_PATH=/cellar/users/aklie/opt/ARACNe-AP/dist/aracne.jar
 
 # Configure input arguments
-loom_in=$1
+tsv_in=$1
 tf_list=$2
-out_file=$3
-method=$4
+out_dir=$3
+pval=$4
 
-echo -e "Loading loom file: $loom_in"
-echo -e "Using tfs in: $tf_list"
-echo -e "Outputting to: $out_file"
-echo -e "Running using the $method algorithm"
-
-# Run network inference from the CLI
-CMD="pyscenic grn $loom_in $tf_list -o $out_file -m $method --num_workers $SLURM_CPUS_PER_TASK"
+# Calculate threshold from the CLI
+CMD="java -jar $ARACNE_PATH -e $tsv_in -o $out_dir --tfs $tf_list --pvalue $pval --seed -1 --threads $SLURM_CPUS_PER_TASK --calculateThreshold"
 echo -e "Running:\n $CMD"
 $CMD
 

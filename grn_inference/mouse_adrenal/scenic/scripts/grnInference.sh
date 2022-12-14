@@ -3,7 +3,7 @@
 #SBATCH -o %x.out
 #SBATCH -e %x.err
 ##############################################
-# USAGE: sbatch --job-name=grn_test --cpus-per-task=32 --mem-per-cpu=4G --time=02-00:00:00 $loom_in $tf_list $out_file $method
+# USAGE: sbatch --job-name=grnInference_test --cpus-per-task=32 --mem-per-cpu=4G --time=02-00:00:00 $loom_in $tf_list $out_file $method
 # Date 02/17/2022
 ##############################################
 
