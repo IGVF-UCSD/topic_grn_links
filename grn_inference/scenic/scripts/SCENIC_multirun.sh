@@ -11,7 +11,7 @@ date
 echo -e "Job ID: $SLURM_JOB_ID\n"
 
 # Configuring env (choose either singularity or conda)
-source activate /cellar/users/aklie/opt/miniconda3/envs/scverse-py38
+source activate /cellar/users/aklie/opt/miniconda3/envs/scenicplus
 
 # Configure input arguments
 loom_in=$1

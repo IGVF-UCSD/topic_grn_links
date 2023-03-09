@@ -19,9 +19,9 @@ cistopic_obj = pickle.load(open(os.path.join(work_dir, 'scATAC/cistopic_obj.pkl'
 print("Running models...")
 models=run_cgs_models(
     cistopic_obj,
-    n_topics=[2, 5, 10, 20, 30, 40],
+    n_topics=[2, 4, 8, 16, 32, 48],
     n_cpu=6,
-    n_iter=500,
+    n_iter=50,
     random_state=555,
     alpha=50,
     alpha_by_topic=True,
@@ -39,7 +39,7 @@ if not os.path.exists(os.path.join(work_dir, 'scATAC/models')):
 print("Saving models and pycisTopic object with models...")
 pickle.dump(
     models,
-    open(os.path.join(work_dir, 'scATAC/models/models_500_iter_LDA.pkl'), 'wb')
+    open(os.path.join(work_dir, 'scATAC/models/models_50_iter_LDA.pkl'), 'wb')
 )
 
 # Add the models to the object

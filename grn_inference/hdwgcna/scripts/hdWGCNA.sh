@@ -30,8 +30,4 @@ $out_dir"
 echo -e "Running:\n $CMD\n"
 $CMD
 
-# Move TOM to out directory, do this manually
-#mv TOM/* $out_dir
-#rmdir TOM
-
 date
