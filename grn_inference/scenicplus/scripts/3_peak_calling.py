@@ -2,8 +2,10 @@ import os
 import sys
 import warnings
 import pickle
+import pandas as pd
+import pyranges as pr
 from pycisTopic.pseudobulk_peak_calling import peak_calling
-from pycisTopic.iterative_peak_calling import consensus_peaks
+from pycisTopic.iterative_peak_calling import get_consensus_peaks
 
 # Set-up
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -11,12 +13,22 @@ _stderr = sys.stderr
 null = open(os.devnull,'wb')
 
 # Dirs and paths
-work_dir = 'mouse_adrenal'
+work_dir = "/cellar/users/aklie/projects/igvf/topic_grn_links/grn_inference/scenicplus/mouse_heart"
 bed_paths = pickle.load(open(os.path.join(work_dir, 'scATAC/consensus_peak_calling/pseudobulk_bed_files/bed_paths.pkl'), 'rb'))
-bw_paths =  pickle.load(open(os.path.join(work_dir, 'scATAC/consensus_peak_calling/pseudobulk_bed_files/bw_paths.pkl'), 'rb'))
+bw_paths =  pickle.load(open(os.path.join(work_dir, 'scATAC/consensus_peak_calling/pseudobulk_bw_files/bw_paths.pkl'), 'rb'))
 tmp_dir = '/cellar/users/aklie/tmp/'
 
+# Stream chromsizes directly into memory using pandas
+print("Reading in chromsizes")
+target_url='https://hgdownload.cse.ucsc.edu/goldenpath/mm10/bigZips/mm10.chrom.sizes'
+chromsizes=pd.read_csv(target_url, sep='\t', header=None)
+chromsizes.columns=['Chromosome', 'End']
+chromsizes['Start']=[0]*chromsizes.shape[0]
+chromsizes=chromsizes.loc[:,['Chromosome', 'Start', 'End']]
+chromsizes=pr.PyRanges(chromsizes)
+
 # Run peak calling
+print("Running peak calling")
 macs_path = '/cellar/users/aklie/opt/miniconda3/envs/scenicplus/bin/macs2'
 narrow_peaks_dict = peak_calling(
     macs_path,
@@ -33,12 +45,14 @@ narrow_peaks_dict = peak_calling(
 )
 
 # Dump the return object to a pickle
+print("Dumping narrow_peaks_dict to pickle")
 pickle.dump(
     narrow_peaks_dict,
     open(os.path.join(work_dir, 'scATAC/consensus_peak_calling/MACS/narrow_peaks_dict.pkl'), 'wb')
 )
 
 # Get consensus peaks
+print("Getting consensus peaks")
 peak_half_width = 250
 path_to_blacklist= os.path.join(work_dir, 'hg38-blacklist.v2.bed')
 consensus_peaks=get_consensus_peaks(
@@ -49,6 +63,7 @@ consensus_peaks=get_consensus_peaks(
 )
 
 # Save to bed file
+print("Saving consensus peaks to bed file")
 consensus_peaks.to_bed(
     path = os.path.join(work_dir, 'scATAC/consensus_peak_calling/consensus_regions.bed'),
     keep=True,

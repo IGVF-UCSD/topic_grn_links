@@ -11,7 +11,7 @@ _stderr = sys.stderr
 null = open(os.devnull,'wb')
 
 # Dirs and paths
-work_dir = 'mouse_adrenal'
+work_dir = "/cellar/users/aklie/projects/igvf/topic_grn_links/grn_inference/scenicplus/mouse_heart"
 
 # Create a quality control dir
 if not os.path.exists(os.path.join(work_dir, 'scATAC/quality_control')):
