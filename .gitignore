@@ -1,11 +1,7 @@
 *.err
 *.out
-grn_inference/scenic/results/
-grn_inference/hdwgcna/results/
-grn_inference/hdwgcna/scripts/TOM/
-grn_inference/aracne/results/
-grn_inference/scenicplus/mouse_adrenal/
-grn_inference/scenicplus/mouse_heart/
+**/results/
+**/TOM/
 *.pybiomart.sqlite
 
 # Byte-compiled / optimized / DLL files
