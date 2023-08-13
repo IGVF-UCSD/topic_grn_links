@@ -1,0 +1,5 @@
+1. Generate Cicero compatible inputs in the data notebooks
+2. Settle on a scRNAseq analysis that I like
+3. Build a base GRN using Cicero
+4. Run the GRN inference part of the pipeline
+5. Maybe try the TF perturbations?
