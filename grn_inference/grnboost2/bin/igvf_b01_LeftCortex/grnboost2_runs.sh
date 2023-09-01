@@ -1,14 +1,14 @@
 #!/bin/bash
 #SBATCH --partition=carter-compute
-#SBATCH --output=/cellar/users/aklie/projects/igvf/topic_grn_links/grn_inference/genie3/bin/Bridge_Satpathy/out/%x.%A_%a.out
-#SBATCH --error=/cellar/users/aklie/projects/igvf/topic_grn_links/grn_inference/genie3/bin/Bridge_Satpathy/err/%x.%A_%a.err
+#SBATCH --output=/cellar/users/aklie/projects/igvf/topic_grn_links/grn_inference/grnboost2/bin/igvf_b01_LeftCortex/out/%x.%A_%a.out
+#SBATCH --error=/cellar/users/aklie/projects/igvf/topic_grn_links/grn_inference/grnboost2/bin/igvf_b01_LeftCortex/err/%x.%A_%a.err
 #SBATCH --cpus-per-task=4
 #SBATCH --mem-per-cpu=16G
-#SBATCH --time=07-00:00:00
+#SBATCH --time=01-00:00:00
 
 #####
 # USAGE:
-# sbatch --job-name=Bridge_Satpathy_genie3 --array=1-NUM_LINES genie3_runs.sh $CSV_PATH
+# sbatch --job-name=grnboost2_igvf_b01_LeftCortex --array=1-NUM_LINES grnboost2_runs.sh $CSV_PATH
 #####
 
 # Date
@@ -19,7 +19,7 @@ echo -e "Job ID: $SLURM_JOB_ID\n"
 source activate /cellar/users/aklie/opt/miniconda3/envs/scenicplus
 
 # The path to your bash script
-BASH_SCRIPT_PATH=/cellar/users/aklie/opt/igvf-ucsd/genie3_pipeline/scripts/genie3_multirun.sh
+BASH_SCRIPT_PATH=/cellar/users/aklie/opt/igvf-ucsd/grnboost2_pipeline/scripts/grnboost2_multirun.sh
 
 # The path to your csv file
 CSV_PATH=$1
@@ -48,6 +48,6 @@ echo "Running: $cmd"
 echo -e "---\n\n"
 
 # Run the bash script
-echo "genie3 script commands below"
+echo "grnboost2 script commands below"
 echo "---------------------------"
 eval $cmd
