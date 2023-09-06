@@ -1,0 +1,7 @@
+Method	GitHub	Programming language	Statistical framework	Type of modelling	Weighted	Signed	External info	Code quality	Documentation quality	Scalability	class
+ARACNe	https://github.com/califano-lab/ARACNe-AP	Java	mutual information	Non-linear	True	False	TF list	6	6	5	GRN Inference
+CellOracle	https://github.com/morris-lab/CellOracle	Python	regression	Linear	True	True	Base GRN	1	1	1	GRN Inference
+GENIE3	https://github.com/aertslab/arboreto	Python	regression	Non-linear	True	False	TF list	5	5	6	GRN Inference
+GRNBoost2	https://github.com/aertslab/arboreto	Python	regression	Non-linear	True	False	TF list	4	4	3	GRN Inference
+SCENIC	https://github.com/aertslab/pySCENIC	Python	regression	Non-linear	True	False	TF list,Motif-gene rankings,TF-motif annotations	3	3	4	GRN Inference
+WGCNA	https://github.com/mortazavilab/PyWGCNA	Python	correlation	Linear	True	True	TF list	2	2	2	GRN Inference
